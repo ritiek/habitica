@@ -17,6 +17,7 @@
   "EMAILS_TECH_ASSISTANCE_EMAIL": "admin@habitica.com",
   "EMAIL_SERVER_AUTH_PASSWORD": "password",
   "EMAIL_SERVER_AUTH_USER": "user",
+  "EMAIL_SERVER_PORT": "587",
   "EMAIL_SERVER_URL": "http://example.com",
   "ENABLE_CONSOLE_LOGS_IN_PROD": "false",
   "ENABLE_CONSOLE_LOGS_IN_TEST": "false",
