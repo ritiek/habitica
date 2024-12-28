@@ -13,16 +13,32 @@ jobs:
   Build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v1
+      - name: Checkout Repository
+        uses: actions/checkout@v3
         with:
           fetch-depth: 1
-      - name: Build Container
-        uses: ./.github/actions/build-container
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v2
         with:
-          version: "develop"
-          push_containers: "false"
-          create_release: "false"
-          registry_user: ${{ secrets.DOCKER_HUB_USER }}
-          registry_token: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
-          release_access_token: ${{ secrets.ACTIONS_ACCESS_TOKEN }}
+          username: ${{ secrets.DOCKER_HUB_USER }}
+          password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+
+      - name: Build and Push Multi-Platform Image
+        run: |
+          docker buildx build \
+            --platform linux/amd64,linux/arm64 \
+            --tag ${{ secrets.DOCKER_HUB_USER }}/my-container:${{ github.ref_name }} \
+            --push .
+
+      - name: Create GitHub Release (Optional)
+        if: github.event_name == 'push' && startsWith(github.ref, 'refs/heads/')
+        uses: actions/create-release@v1
+        with:
+          tag_name: ${{ github.ref_name }}
+          release_name: Release ${{ github.ref_name }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
