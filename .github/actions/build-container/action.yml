@@ -45,7 +45,7 @@ runs:
       uses: docker/build-push-action@v6
       with:
         target: server
-        platforms: linux/amd64,linux/arm64
+        platforms: linux/arm64
         load: true
         push: ${{ inputs.push_containers }}
         tags: ${{ inputs.registry_user }}/habitica-server:latest,${{ inputs.registry_user }}/habitica-server:${{ steps.version_major.outputs.version_major }},${{ inputs.registry_user }}/habitica-server:${{ inputs.version }}
@@ -55,7 +55,7 @@ runs:
       uses: docker/build-push-action@v6
       with:
         target: client
-        platforms: linux/amd64,linux/arm64
+        platforms: linux/arm64
         load: true
         push: ${{ inputs.push_containers }}
         tags: ${{ inputs.registry_user }}/habitica-client:latest,${{ inputs.registry_user }}/habitica-client:${{ steps.version_major.outputs.version_major }},${{ inputs.registry_user }}/habitica-client:${{ inputs.version }}
