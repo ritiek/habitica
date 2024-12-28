@@ -16,7 +16,7 @@ jobs:
         id: version
       - name: Check release branch exists already
         run: |
-          if git ls-remote --sort='-version:refname' --refs https://github.com/awinterstein/habitica.git | grep "releases/v${{ steps.version.outputs.version }}"; then
+          if git ls-remote --sort='-version:refname' --refs https://github.com/ritiek/habitica.git | grep "releases/v${{ steps.version.outputs.version }}"; then
             echo "exists=true" >> $GITHUB_OUTPUT
           else
             echo "exists=false" >> $GITHUB_OUTPUT
